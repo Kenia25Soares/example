@@ -5,11 +5,18 @@ use App\Models\Job;
 use App\Models\Post;
 
 
+#TODO - revert
+// Route::get('/', function () {
+//     // $jobs = Job::all();
+//      // dd($jobs[2]->title);
+//     return view('home');
+// });
 
 Route::get('/', function () {
-    // $jobs = Job::all();
-     // dd($jobs[2]->title);
-    return view('home');
+    $jobs = Job::all();
+    $posts = Post::all();
+    dd($jobs, $posts); // Para aqui e mostra a estrutura completa
+    return view('home', ['jobs' => $jobs, 'posts' => $posts]);
 });
 
 Route::get('/jobs', function () {
