@@ -13,10 +13,10 @@ use App\Models\Post;
 // });
 
 Route::get('/', function () {
-    $jobs = Job::all();
-    $posts = Post::all();
-    dd($jobs, $posts); // Para aqui e mostra a estrutura completa
-    return view('home', ['jobs' => $jobs, 'posts' => $posts]);
+   return view('home', [
+        'jobs' => [],
+        'posts' => [],
+    ]);
 });
 
 Route::get('/jobs', function () {

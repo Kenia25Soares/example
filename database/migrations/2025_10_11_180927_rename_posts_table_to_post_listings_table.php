@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_listings', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('body');
-            $table->timestamps();
-        });
+        // Renomeia a tabela existente "posts" para "post_listings"
+        Schema::rename('posts', 'post_listings');
     }
 
     /**
@@ -24,6 +20,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts_listings');
+        // Caso queira reverter a mudança
+        Schema::rename('post_listings', 'posts');
     }
 };
