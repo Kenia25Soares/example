@@ -12,7 +12,12 @@ class Job extends Model{
 
     public function employer()  //Crio aqui uma função
     {
-        return $this->belongsTo(Employer::class, 'employer_id', 'id');
+        return $this->belongsTo(Employer::class);
     }
+
+    public function tags()
+{
+    return $this->belongsToMany(Tag::class, 'job_tag', 'job_listing_id', 'tag_id');
+}
 }
 
