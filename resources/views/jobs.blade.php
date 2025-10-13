@@ -13,5 +13,14 @@
                 </div> 
             </a>
         @endforeach
-    </div>
+    
+        <div>
+            {{ $jobs->links() }}   
+        </div>
+    </div>    
 </x-layout>
+
+
+{{-- <div>
+            {{ $jobs->links() }}    //essa e linha que coloca a paginação com numeração
+        </div> --}}

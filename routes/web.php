@@ -20,7 +20,9 @@ Route::get('/', function () {
 });
 
 Route::get('/jobs', function () {
-    $jobs = Job::with('employer')->get();
+    // $jobs = Job::with('employer')->cursorPaginate(3);
+    $jobs = Job::with('employer')->simplePaginate(3);
+    // $jobs = Job::with('employer')->paginate(3);  // Add Paginação
 
     return view('jobs', [
                'jobs' => $jobs
@@ -33,8 +35,10 @@ Route::get('/jobs/{id}', function ($id) {
 });
 
 Route::get('/posts', function () {
+     $posts = Post::simplePaginate(3); // Exibe 5 posts por página 
+
     return view('posts', [
-               'posts' => Post::all()
+               'posts' => $posts
     ]);
 });
 
