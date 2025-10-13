@@ -3,13 +3,16 @@
         Post Listings
     </x-slot:heading>
 
-    <ul>
+    <div>
         @foreach ($posts as $post)
-            <li class="mb-4">
-                <a href="/posts/{{ $post->id }}" class="text-blue-500 hover:underline">
-                    <strong>{{ $post->title }}</strong>
-                </a>
-            </li>
+            <a href="/posts/{{ $post->id }}" class="block px-4 py-6 border border-gray-200 hover:bg-gray-50 rounded-lg mb-4">
+                <div class="font-bold text-blue-600 text-lg mb-2">
+                    {{ $post->title }}
+                </div>
+                <div class="text-gray-700">
+                    {{ Str::limit($post->body, 100) }}
+                </div>
+            </a>
         @endforeach
-    </ul>
+    </div>
 </x-layout>
