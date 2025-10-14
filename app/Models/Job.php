@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Job extends Model{
     use HasFactory;
     protected $table = 'job_listings';
+
+    // protected $guarded = []; // isso desativa os recursos e cria um job com qualquer valor
     protected $fillable = ['title', 'salary', 'employer_id'];  // Esses 2 pode ser atribuido em massa
 
     public function employer()  //Crio aqui uma função

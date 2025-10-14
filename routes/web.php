@@ -19,34 +19,72 @@ Route::get('/', function () {
     ]);
 });
 
+# ----------------------------
+# JOBS
+# ----------------------------
+
 Route::get('/jobs', function () {
     // $jobs = Job::with('employer')->cursorPaginate(3);
-    $jobs = Job::with('employer')->simplePaginate(3);
+    $jobs = Job::with('employer')->latest()->simplePaginate(3);
     // $jobs = Job::with('employer')->paginate(3);  // Add Paginação
 
-    return view('jobs', [
+    return view('jobs.index', [
                'jobs' => $jobs
     ]);
 });
 
-Route::get('/jobs/{id}', function ($id) {
-        $job = Job::find($id);
-    return view('job', ['job' => $job]);
+
+Route::get('/jobs/create', function () {
+    return view('jobs.create');
 });
 
-Route::get('/posts', function () {
-     $posts = Post::simplePaginate(3); // Exibe 5 posts por página 
+Route::get('/jobs/{id}', function ($id) {
+        $job = Job::find($id);
+    return view('jobs.show', ['job' => $job]);
+});
 
-    return view('posts', [
+Route::post('/jobs', function () {
+    // dd(request('title'));  //validação
+
+    Job::create([
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1
+    ]);
+
+    return redirect('/jobs');
+});
+
+# ----------------------------
+# POSTS
+# ----------------------------
+
+
+Route::get('/posts', function () {
+     $posts = Post::latest()->simplePaginate(3); // Exibe 5 posts por página 
+
+    return view('posts.index', [
                'posts' => $posts
     ]);
 });
 
-Route::get('/posts/{id}', function ($id) {
-        $post = Post::find($id);
-    return view('post', ['post' => $post]);
+Route::get('/posts/create', function () {
+    return view('posts.create');
 });
 
+Route::get('/posts/{id}', function ($id) {
+        $post = Post::find($id);
+    return view('posts.show', ['post' => $post]);
+});
+
+Route::post('/posts', function () {
+    Post::create([
+        'title' => request('title'),
+        'body' => request('body'),
+    ]);
+
+    return redirect('/posts');
+});
 
 Route::get('/contact', function () {
     return view('contact');
