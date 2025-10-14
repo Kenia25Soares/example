@@ -17,8 +17,9 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-             'title' => $this->faker->sentence(),
+            'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(3),
+            'user_id' => \App\Models\User::factory(), // cria um autor automaticamente
         ];
     }
 }

@@ -61,7 +61,7 @@ Route::post('/jobs', function () {
 
 
 Route::get('/posts', function () {
-     $posts = Post::latest()->simplePaginate(3); // Exibe 5 posts por página 
+     $posts = Post::with(['user', 'tags'])->latest()->simplePaginate(3); 
 
     return view('posts.index', [
                'posts' => $posts
@@ -81,6 +81,7 @@ Route::post('/posts', function () {
     Post::create([
         'title' => request('title'),
         'body' => request('body'),
+        'user_id' => 1 // exemplo: id do autor (ou auth()->id() se tiver login)//Se o user estiver autenticado, troque por'user_id' => auth()->id()
     ]);
 
     return redirect('/posts');
