@@ -44,7 +44,10 @@ Route::get('/jobs/{id}', function ($id) {
 });
 
 Route::post('/jobs', function () {
-    // dd(request('title'));  //validação
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
 
     Job::create([
         'title' => request('title'),
@@ -78,6 +81,13 @@ Route::get('/posts/{id}', function ($id) {
 });
 
 Route::post('/posts', function () {
+    // Validação
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'body' => ['required', 'min:10'],
+    ]);
+
+     // Criação
     Post::create([
         'title' => request('title'),
         'body' => request('body'),

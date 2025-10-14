@@ -15,10 +15,13 @@
                     <div class="sm:col-span-4">
                         <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
                         <div class="mt-2">
-                            <input type="text" name="title" id="title"
+                            <input type="text" name="title" id="title" value="{{ old('title') }}"
                                    class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                   placeholder="Post title">
+                                   placeholder="Post title" required>
                         </div>
+                        @error('title')
+                                <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="sm:col-span-6">
@@ -26,8 +29,11 @@
                         <div class="mt-2">
                             <textarea name="body" id="body" rows="5"
                                       class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                      placeholder="Write your post here..."></textarea>
+                                      placeholder="Write your post here..." required>{{ old('body') }}</textarea>
                         </div>
+                        @error('body')
+                            <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
