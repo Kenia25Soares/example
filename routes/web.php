@@ -1,101 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
+use App\Http\Controllers\JobController;
 use App\Models\Post;
 
 
-#TODO - revert
-// Route::get('/', function () {
-//     // $jobs = Job::all();
-//      // dd($jobs[2]->title);
-//     return view('home');
-// });
-
-Route::get('/', function () {
-   return view('home', [
-        'jobs' => [],
-        'posts' => [],
-    ]);
-});
+Route::view('/', 'home');
 
 # ----------------------------
 # JOBS
 # ----------------------------
 
-//Index
-Route::get('/jobs', function () {
-    // $jobs = Job::with('employer')->cursorPaginate(3);
-    $jobs = Job::with('employer')->latest()->simplePaginate(3);
-    // $jobs = Job::with('employer')->paginate(3);  // Add Paginação
+// Route::controller(JobController::class)->group(function(){
+//     Route::get('/jobs','index');
+//     Route::get('/jobs/create', 'create');
+//     Route::get('/jobs/{job}', 'show');
+//     Route::post('/jobs', 'store');
+//     Route::get('/jobs/{job}/edit', 'edit');
+//     Route::patch('/jobs/{job}', 'update');
+//     Route::delete('/jobs/{job}', 'destroy');
+// });
 
-    return view('jobs.index', [
-               'jobs' => $jobs
-    ]);
-});
-
-// Create
-Route::get('/jobs/create', function () {
-    return view('jobs.create');
-});
-
-// Show
-Route::get('/jobs/{id}', function ($id) {
-        $job = Job::find($id);
-    return view('jobs.show', ['job' => $job]);
-});
-
-// Store
-// Armazena ou grava um novo trabalho na DB
-Route::post('/jobs', function () {
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
-
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1
-    ]);
-
-    return redirect('/jobs');
-});
-
-// Edit
-Route::get('/jobs/{id}/edit', function ($id) {
-        $job = Job::find($id);
-    return view('jobs.edit', ['job' => $job]);
-});
-
-// Update  --Patch
-Route::patch('/jobs/{id}', function ($id) {
-    // validate
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
-
-    // authorize --em espera(On hold)
-
-    $job = Job::findOrFail($id);  // findOrFail lança uma exceção de modelo não encontrado
-
-    $job->update([
-        'title' => request('title'),
-        'salary' => request('salary'),
-    ]);
-
-    return redirect('/jobs/' . $job->id);
-});
-
-// Delete --Destroy
-Route::delete('/jobs/{id}', function ($id) {
-    // authorize (On hold/ em espera)
-
-    Job::findOrFail($id)->delete();  // delete the  job
-
-    return redirect('/jobs');
-});
+Route::resource('jobs', JobController::class);
 
 # ----------------------------
 # POSTS
@@ -117,7 +43,8 @@ Route::get('/posts/create', function () {
 
 // Show
 Route::get('/posts/{id}', function ($id) {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
+
     return view('posts.show', ['post' => $post]);
 });
 
@@ -170,6 +97,5 @@ Route::delete('/posts/{id}', function ($id) {
     return redirect('/posts');
 });
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+
+Route::view('/contact', 'contact');
