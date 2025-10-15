@@ -9,7 +9,11 @@
         {{ $post->body }}
     </p>
 
-    {{-- <p class="mt-6">
-        <x-button href="">Edit Post</x-button>
-    </p> --}}
+    <div class="text-sm text-gray-500">
+        Written by: <strong>{{ $post->user->first_name ?? 'Unknown Author' }}</strong>
+    </div>
+    
+    <p class="mt-6">
+        <x-button href="/posts/{{ $post->id }}/edit">Edit Post</x-button>
+    </p>
 </x-layout>

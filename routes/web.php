@@ -117,11 +117,11 @@ Route::get('/posts/create', function () {
 
 // Show
 Route::get('/posts/{id}', function ($id) {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
     return view('posts.show', ['post' => $post]);
 });
 
-// Armazena ou grava um novo Post na DB
+// Store -- Armazena ou grava um novo Post na DB
 Route::post('/posts', function () {
     // Validação
     request()->validate([
@@ -136,6 +136,37 @@ Route::post('/posts', function () {
         'user_id' => 1 // exemplo: id do autor (ou auth()->id() se tiver login)//Se o user estiver autenticado, troque por'user_id' => auth()->id()
     ]);
 
+    return redirect('/posts');
+});
+
+//Edit
+Route::get('/posts/{id}/edit', function ($id) {
+    $post = Post::findOrFail($id);
+
+    return view('posts.edit', ['post' => $post]);
+});
+
+// Update - Patch
+Route::patch('/posts/{id}', function ($id) {
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'body' => ['required', 'min:10'],
+    ]);
+
+    $post = Post::findOrFail($id);
+
+     $post->update([
+        'title' => request('title'),
+        'body' => request('body'),
+        // 'user_id' => 1, // ou auth()->id() se houver autenticação
+    ]);
+
+    return redirect('/posts/' . $post->id);
+});
+
+// Delete --Destroy
+Route::delete('/posts/{id}', function ($id) {
+    Post::findOrFail($id)->delete();
     return redirect('/posts');
 });
 
