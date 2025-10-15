@@ -8,4 +8,8 @@
     <p class="text-gray-700">
         {{ $post->body }}
     </p>
+
+    {{-- <p class="mt-6">
+        <x-button href="">Edit Post</x-button>
+    </p> --}}
 </x-layout>

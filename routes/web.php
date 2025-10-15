@@ -23,6 +23,7 @@ Route::get('/', function () {
 # JOBS
 # ----------------------------
 
+//Index
 Route::get('/jobs', function () {
     // $jobs = Job::with('employer')->cursorPaginate(3);
     $jobs = Job::with('employer')->latest()->simplePaginate(3);
@@ -33,16 +34,19 @@ Route::get('/jobs', function () {
     ]);
 });
 
-
+// Create
 Route::get('/jobs/create', function () {
     return view('jobs.create');
 });
 
+// Show
 Route::get('/jobs/{id}', function ($id) {
         $job = Job::find($id);
     return view('jobs.show', ['job' => $job]);
 });
 
+// Store
+// Armazena ou grava um novo trabalho na DB
 Route::post('/jobs', function () {
     request()->validate([
         'title' => ['required', 'min:3'],
@@ -58,11 +62,46 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
+// Edit
+Route::get('/jobs/{id}/edit', function ($id) {
+        $job = Job::find($id);
+    return view('jobs.edit', ['job' => $job]);
+});
+
+// Update  --Patch
+Route::patch('/jobs/{id}', function ($id) {
+    // validate
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
+    // authorize --em espera(On hold)
+
+    $job = Job::findOrFail($id);  // findOrFail lança uma exceção de modelo não encontrado
+
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]);
+
+    return redirect('/jobs/' . $job->id);
+});
+
+// Delete --Destroy
+Route::delete('/jobs/{id}', function ($id) {
+    // authorize (On hold/ em espera)
+
+    Job::findOrFail($id)->delete();  // delete the  job
+
+    return redirect('/jobs');
+});
+
 # ----------------------------
 # POSTS
 # ----------------------------
 
-
+//Index
 Route::get('/posts', function () {
      $posts = Post::with(['user', 'tags'])->latest()->simplePaginate(3); 
 
@@ -71,15 +110,18 @@ Route::get('/posts', function () {
     ]);
 });
 
+//Create
 Route::get('/posts/create', function () {
     return view('posts.create');
 });
 
+// Show
 Route::get('/posts/{id}', function ($id) {
         $post = Post::find($id);
     return view('posts.show', ['post' => $post]);
 });
 
+// Armazena ou grava um novo Post na DB
 Route::post('/posts', function () {
     // Validação
     request()->validate([
