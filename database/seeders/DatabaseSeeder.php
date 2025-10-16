@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         //\App\Models\Post::factory(10)->create();
 
-        User::factory()->create([
-            'first_name' => 'Kenia',
-            'last_name' => 'Ss',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'test@example.com'], // condição de verificação
+            [
+                'first_name' => 'Kenia',
+                'last_name' => 'Ss',
+                'password' => bcrypt('password'),
+            ]
+        );
 
          $this->call(JobSeeder::class);
     }

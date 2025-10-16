@@ -26,6 +26,10 @@ class User extends Authenticatable
 
     protected $guarded = []; // aqui não preciso proteger nada
 
+    public function employers()
+    {
+        return $this->hasMany(Employer::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

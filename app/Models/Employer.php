@@ -12,7 +12,12 @@ class Employer extends Model
     protected $fillable = ['name'];
 
     public function jobs()
-{
-    return $this->hasMany(Job::class, 'employer_id', 'id');
-}
+    {
+        return $this->hasMany(Job::class, 'employer_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

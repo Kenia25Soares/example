@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('employers', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class);
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade'); // obrigatório, logo após o id
             $table->string('name');
             $table->timestamps();
         });
