@@ -5,21 +5,25 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Jobs\TranslateJob;
+use App\Models\Job;
 
-// Ver no browser example/test/test se aparece a msm que colocamos na view de mail->job-posted
-// Route::get('test', function(){
-//   return new \App\Mail\JobPosted();
-// });
 
-// isso fazemos para responde de forma rapida, ele não responde p/ zeca apenas regista/armazenar o email
+Route::get('test', function(){ 
+  $job = Job::first();
+
+    TranslateJob::dispatch($job);
+
+    return 'Done';
+ });
+
 // Route::get('test', function(){ 
-//   \Illuminate\Support\Facades\Mail::to ('zeca@yopmail.com')->send(
-//     new \App\Mail\JobPosted()
-//   );
+//    dispatch(function(){
+//     logger('hello from the queue!');
+//   })->delay(5);
 
 //     return 'Done';
-// });
-
+//  });
 
 
 Route::view('/', 'home');
