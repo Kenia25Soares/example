@@ -6,6 +6,20 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisteredUserController;
 
+// Ver no browser example/test/test se aparece a msm que colocamos na view de mail->job-posted
+// Route::get('test', function(){
+//   return new \App\Mail\JobPosted();
+// });
+
+// isso fazemos para responde de forma rapida, ele não responde p/ zeca apenas regista/armazenar o email
+// Route::get('test', function(){ 
+//   \Illuminate\Support\Facades\Mail::to ('zeca@yopmail.com')->send(
+//     new \App\Mail\JobPosted()
+//   );
+
+//     return 'Done';
+// });
+
 
 
 Route::view('/', 'home');
