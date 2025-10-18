@@ -1,5 +1,7 @@
 import './bootstrap';
+import "../css/app.css";
 
+// alert('hello from the JS');
 // document.addEventListener('DOMContentLoaded', function () {
     
 //     // 1. Encontrar o link "Home"
